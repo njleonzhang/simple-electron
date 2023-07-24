@@ -11,18 +11,34 @@ if (process.platform === "linux") app.commandLine.appendSwitch("no-sandbox");
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    show: false,
     webPreferences: {
       preload: MAIN_WINDOW_PRELOAD_WEBPACK_ENTRY,
     },
   });
 
+  mainWindow.maximize();
+  mainWindow.show();
+
+  let url = app.commandLine.getSwitchValue('url');
+  console.log(url);
+
   // and load the index.html of the app.
-  mainWindow.loadURL("https://www.baidu.com");
+  mainWindow.loadURL(url || "http://10.15.111.15:8088/home");
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
+
+  mainWindow.webContents.setWindowOpenHandler(() => {
+    return {
+      action: 'allow',
+      overrideBrowserWindowOptions: { show: false },
+    }
+  })
+
+  mainWindow.webContents.on('did-create-window', win =>
+    win.once('ready-to-show', () => win.maximize()),
+  )
 };
 
 // This method will be called when Electron has finished
