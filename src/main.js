@@ -21,13 +21,15 @@ const createWindow = () => {
   mainWindow.show();
 
   let url = app.commandLine.getSwitchValue('url');
-  console.log(url);
+  let debug = app.commandLine.getSwitchValue('debug') || null;
 
   // and load the index.html of the app.
-  mainWindow.loadURL(url || "http://10.15.111.15:8088/home");
+  mainWindow.loadURL(url || "http://28.209.2.70:18080/appview/zhyw");
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if (debug) {
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.webContents.setWindowOpenHandler(() => {
     return {
