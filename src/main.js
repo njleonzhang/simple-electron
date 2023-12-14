@@ -1,4 +1,4 @@
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, Menu } = require('electron');
 const path = require('path');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
@@ -7,6 +7,9 @@ if (require('electron-squirrel-startup')) {
 }
 
 if (process.platform === "linux") app.commandLine.appendSwitch("no-sandbox");
+
+// 移除工具栏
+Menu.setApplicationMenu(null);
 
 const createWindow = () => {
   // Create the browser window.
@@ -24,7 +27,7 @@ const createWindow = () => {
   let debug = app.commandLine.getSwitchValue('debug') || null;
 
   // and load the index.html of the app.
-  mainWindow.loadURL(url || "http://28.209.2.70:18080/appview/zhyw");
+  mainWindow.loadURL(url || "http://10.15.70.4:19090/applicationview/content/view?appid=31ccf863-5330-73d7-0504-2dee788b0244&type=view&menuId=279bea23-62ec-0625-1eaf-b7ac7b738a38&ssoType=test&token=admin");
 
   // Open the DevTools.
   if (debug) {
